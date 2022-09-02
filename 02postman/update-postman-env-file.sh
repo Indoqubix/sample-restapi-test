@@ -12,10 +12,10 @@ api_gateway_url=`aws cloudformation describe-stacks \
 echo "API Gateway URL:" ${api_gateway_url}
 
 jq -e --arg apigwurl "$api_gateway_url" '(.values[] | select(.key=="apigw-root") | .value) = $apigwurl' \
-  PetStoreAPIEnvironment.postman_environment.json > PetStoreAPIEnvironment.postman_environment.json.tmp \
-  && cp PetStoreAPIEnvironment.postman_environment.json.tmp PetStoreAPIEnvironment.postman_environment.json \
-  && rm PetStoreAPIEnvironment.postman_environment.json.tmp
+  SampleAPIEnvironment.postman_environment.json > SampleAPIEnvironment.postman_environment.json.tmp \
+  && cp SampleAPIEnvironment.postman_environment.json.tmp SampleAPIEnvironment.postman_environment.json \
+  && rm SampleAPIEnvironment.postman_environment.json.tmp
 
-echo "Updated PetStoreAPIEnvironment.postman_environment.json"
+echo "Updated SampleAPIEnvironment.postman_environment.json"
 
-cat PetStoreAPIEnvironment.postman_environment.json
+cat SampleAPIEnvironment.postman_environment.json
