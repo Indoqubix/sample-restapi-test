@@ -281,18 +281,18 @@ Resources:
 
       - Name: Build
         Actions:
-        - Name: BuildPetStoreAPI
+        - Name: BuildSampleRestAPI
           ActionTypeId:
             Owner: AWS
             Category: Build
             Version: 1
             Provider: CodeBuild
           Configuration:
-            ProjectName: !Ref PetStoreAPISAMCodeBuildProject
+            ProjectName: !Ref SampleRestAPISAMCodeBuildProject
           InputArtifacts:
-          - Name: 'PetStoreAPI-SourceArtifact'
+          - Name: 'SampleRestAPI-SourceArtifact'
           OutputArtifacts:
-          - Name: 'PetStoreAPI-BuildArtifact'
+          - Name: 'SampleRestAPI-BuildArtifact'
           RunOrder: 1
 
       - Name: Deploy
@@ -306,7 +306,7 @@ Resources:
           Configuration:
             TemplatePath: !Join
             - ''
-            - - 'PetStoreAPI-BuildArtifact'
+            - - 'SampleRestAPI-BuildArtifact'
               - '::01api/petstore-api-output.yaml'
             ActionMode: CHANGE_SET_REPLACE
             Capabilities: CAPABILITY_IAM
@@ -316,7 +316,7 @@ Resources:
             - Arn
             StackName: petstore-api-stack
           InputArtifacts:
-          - Name: 'PetStoreAPI-BuildArtifact'
+          - Name: 'SampleRestAPI-BuildArtifact'
           OutputArtifacts: []
           RunOrder: 1
 
@@ -337,7 +337,7 @@ Resources:
       # https://docs.aws.amazon.com/codepipeline/latest/userguide/actions-invoke-lambda-function.html
       - Name: Test
         Actions:
-        - Name: TestPetStoreAPI
+        - Name: TestSampleRestAPI
           ActionTypeId:
             Owner: AWS
             Category: Build
@@ -346,12 +346,12 @@ Resources:
           Configuration:
             ProjectName: !Ref PostmanNewmanCodeBuildProject
           InputArtifacts:
-            - Name: 'PetStoreAPI-SourceArtifact'
+            - Name: 'SampleRestAPI-SourceArtifact'
           OutputArtifacts:
-            - Name: 'PetStoreAPI-TestArtifact'
+            - Name: 'SampleRestAPI-TestArtifact'
           RunOrder: 1
 
-  PetStorePostmanPipelineRunnerRole:
+  SampleRestPostmanPipelineRunnerRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
